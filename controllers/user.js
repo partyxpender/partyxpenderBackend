@@ -461,8 +461,6 @@ const getUser = (req, res) => {
                 id: body.userId
             }
         }).then((user) => {
-            // console.log(req.header);
-            // console.log(req.headers);
             if (user) {
                 let token = body.token || req.headers.authorization;
                 let isTokenValid = jwt.verify(token.split(" ")[1], process.env.TOKEN_KEY);
