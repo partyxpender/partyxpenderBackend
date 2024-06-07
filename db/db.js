@@ -3,11 +3,11 @@ const { Sequelize } = require('sequelize');
 require("dotenv").config();
 
 const dbConfig = new Sequelize(
-    process.env.DB_NAME,
-    process.env.USER,
-    process.env.PASSWORD,
+    process.env.MYSQL_ADDON_DB,
+    process.env.MYSQL_ADDON_USER,
+    process.env.MYSQL_ADDON_PASSWORD,
     {
-        host: process.env.HOST,
+        host: process.env.MYSQL_ADDON_HOST,
         dialect: 'mysql',
     }
 );

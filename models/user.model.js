@@ -16,7 +16,7 @@ const User = dbConfig.define('users', {
         type: DataTypes.STRING,
         allowNull: false, unique: true, defaultValue: "",
     },
-    "id": {
+    "uid": {
         type: DataTypes.STRING,
         allowNull: false, unique: true, defaultValue: "",
     },
