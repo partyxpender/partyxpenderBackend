@@ -6,7 +6,7 @@ const port = process.env.MYSQL_ADDON_PORT;
 
 
 
-
+app.get('/', (req, res) => res.send("Hello, world!\n\nWelcome to partie - xpender"));
 
 
 app.listen(port, () => {
