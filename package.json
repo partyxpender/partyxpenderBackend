@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start" : "node index.js"
+    "start": "node index.js"
   },
   "author": "megagonn",
   "license": "ISC",
@@ -19,6 +19,7 @@
     "express": "^4.19.2",
     "formidable": "^3.5.1",
     "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.9.7",
     "nodemon": "^3.1.2",
     "sequelize": "^6.37.3",
     "socket.io": "^4.7.5"
