@@ -1,6 +1,6 @@
 // const dedicated_account = 
 const axios = require('axios').default;
-const sk = process.env.SSK
+const sk = process.env.SK
 
 const createDVAcustomer = async (customer, first_name, last_name, phone) => {
     try {

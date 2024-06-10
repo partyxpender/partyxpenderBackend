@@ -75,9 +75,11 @@ const signup = async (req, res) => {
                                     { expiresIn: "3600" }
                                 );
                                 var userotp = { otp: generateOtp(), timestamp: date }
-                                var dva = await createAndAssignDVA(body.email, body.first_name, body.last_name, body.phone);
-                                console.log(dva);
-                                if (dva.status) {
+                                // var dva = await createAndAssignDVA(body.email, body.first_name, body.last_name, body.phone);
+                                // console.log(dva);
+                                /// * * * Uncomment the above line once the Paystack setup is completed.
+
+                                if (true) {
                                     User.create({
                                         first_name: body.first_name,
                                         last_name: body.last_name,
@@ -90,8 +92,10 @@ const signup = async (req, res) => {
                                         token: jwtoken,
                                         otp: JSON.stringify(userotp),
                                         wallet: 0,
+                                        total_xpent: 0,
                                         // referral_code: generateReferralCode(body.first_name, body.phone),
-                                        account_number: dva.payload.account_number,
+                                        account_number: body.phone,
+                                        // account_number: dva.payload.account_number,
 
                                     }).then(async (result) => {
                                         console.log(result);

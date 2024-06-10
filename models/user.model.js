@@ -52,6 +52,10 @@ const User = dbConfig.define('users', {
         type: DataTypes.INTEGER,
         allowNull: false, defaultValue: 0
     },
+    "total_xpent": {
+        type: DataTypes.INTEGER,
+        allowNull: false, defaultValue: 0
+    },
     
     "is_active": {
         type: DataTypes.BOOLEAN,
