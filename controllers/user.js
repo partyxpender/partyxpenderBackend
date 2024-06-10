@@ -50,7 +50,7 @@ const signup = async (req, res) => {
         let date = new Date().getTime();
         console.log(body);
         dbConfig.sync().then(() => {
-            if (body.email.toString().trim() != '' ) {
+            if (body.email.toString().trim() != '') {
                 User.findAll({
                     where: {
                         [Op.or]: [
@@ -62,7 +62,7 @@ const signup = async (req, res) => {
                     if (queryResult.length > 0) {
                         console.log(queryResult);
                         res.send({ status: false, payload: "Email or Phone number already exists!" });
-                        res.end();
+                        // res.end();
                     } else {
                         bcrypt.genSalt(10, (err, salt) => {
                             bcrypt.hash(body.password, salt).then(async (hash) => {
@@ -76,6 +76,7 @@ const signup = async (req, res) => {
                                 );
                                 var userotp = { otp: generateOtp(), timestamp: date }
                                 var dva = await createAndAssignDVA(body.email, body.first_name, body.last_name, body.phone);
+                                console.log(dva);
                                 if (dva.status) {
                                     User.create({
                                         first_name: body.first_name,
@@ -465,8 +466,8 @@ const getUser = (req, res) => {
                 let token = body.token || req.headers.authorization;
                 let isTokenValid = jwt.verify(token.split(" ")[1], process.env.TOKEN_KEY);
                 if (isTokenValid && token.split(" ")[1] == user.token) {
-                    let { id, first_name, last_name, state, email, phone, address, img_URL, wallet, referral_code, email_verified, account_number, number_of_referral, image_URL } = user;
-                    res.send({ status: true, payload: { id, first_name, last_name, state, email, phone, address, img_URL, wallet, referral_code, email_verified, account_number, number_of_referral, image_URL } })
+                    let { id, first_name, last_name, email, phone, img_URL, wallet, uid, username, leader_board, account_number, image_URL } = user;
+                    res.send({ status: true, payload: { id, first_name, last_name, email, phone, img_URL, wallet, uid, username, leader_board, account_number, image_URL } })
                 } else {
                     res.send({ status: false, payload: "This session has expired. Login again." });
                 }
