@@ -9,13 +9,14 @@ const generateOtp = () => {
     return otp;
     // return "0011";
 }
-const generateOrderNumber = (currentIndex) => {
-    var newIndex = (parseInt(currentIndex) + 1).toString();
-    for (let index = 0; newIndex.length < 6; index++) {
-        newIndex = "0" + newIndex;
-
+const uuid = () => {
+    const charset = "0123456789";
+    let uuid = "";
+    for (let i = 0, n = charset.length; i < 7; ++i) {
+        uuid += charset.charAt(Math.floor(Math.random() * n));
     }
-    return "#" + newIndex;
+
+    return uuid;
 }
 
 const generateReferralCode = (firstName, phone) => {
@@ -73,4 +74,4 @@ function createTempFile(data, extension = 'png') {
 
 // }
 
-module.exports = { generateOtp, generateReferralCode, generateOrderNumber, generateId, generatePassword, createTempFile };
+module.exports = { generateOtp, generateReferralCode, uuid, generateId, generatePassword, createTempFile };

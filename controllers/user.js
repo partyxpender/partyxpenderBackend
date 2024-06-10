@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 // const mailer = require('../mail/mailer');
 const jwt = require('jsonwebtoken');
 const { dbConfig } = require('../db/db');
-const { generateOtp, generateReferralCode, generatePassword } = require('../helpers/methods');
+const { generateOtp, generateReferralCode, generatePassword, uuid } = require('../helpers/methods');
 const { User } = require('../models/user.model');
 const { Op, where } = require("sequelize");
 const { Notification } = require('../models/notification.model');
@@ -80,12 +80,13 @@ const signup = async (req, res) => {
                                 /// * * * Uncomment the above line once the Paystack setup is completed.
 
                                 if (true) {
+                                    let uid = uuid();
                                     User.create({
                                         first_name: body.first_name,
                                         last_name: body.last_name,
                                         email: body.email,
                                         username: `@${body.first_name}_${body.last_name}`,
-                                        // id: body.email,
+                                        uid: uid,
                                         leader_board: "Agba baller",
                                         phone: body.phone,
                                         password: hash,
