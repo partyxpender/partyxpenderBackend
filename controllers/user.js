@@ -131,7 +131,7 @@ const signup = async (req, res) => {
                                                 //     customer_email_address: body.email
                                                 // })
                                             ])
-                                            res.send({ status: true, payload: { msg: "Registration successful!", id: result.id, token: jwtoken, email: result.email, phone: result.phone } });
+                                            res.send({ status: true, payload: { msg: "Registration successful!", id: result.id, token: jwtoken, email: result.email, phone: result.phone, uid: result.uid } });
                                         } else {
                                             res.send({
                                                 status: false,
