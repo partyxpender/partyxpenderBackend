@@ -311,7 +311,6 @@ const verifyOTP = (req, res) => {
             where: {
                 [Op.or]: [
                     { email: body.email },
-                    { phone: body.phone }
                 ]
             }
         }).then((queryResult) => {
