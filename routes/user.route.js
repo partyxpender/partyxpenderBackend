@@ -4,6 +4,7 @@ const user = require('../controllers/user')
 
 router.post('/user/signup', user.signup);
 router.post('/user/login', user.login);
+router.post('/user/bio_login', user.bioMetricLogin);
 router.post('/user/otp', user.resendOtp);
 router.post('/user/verify_otp', user.verifyOTP);
 router.post('/user/reset_password', user.resetPassword);

@@ -72,7 +72,7 @@ const signup = async (req, res) => {
                                 const jwtoken = jwt.sign(
                                     { user_id: email, email },
                                     process.env.TOKEN_KEY,
-                                    { expiresIn: "3600" }
+                                    { expiresIn: "3600s" }
                                 );
                                 var userotp = { otp: generateOtp(), timestamp: date }
                                 // var dva = await createAndAssignDVA(body.email, body.first_name, body.last_name, body.phone);
@@ -244,6 +244,67 @@ const login = (req, res) => {
         res.send({
             status: false,
             payload: "Invalid credentials."
+        })
+    }
+}
+
+const bioMetricLogin = (req, res) => {
+    try {
+        User.findOne({
+            where: {
+                [Op.or]: [
+                    { email: body.email, },
+                    // { phone: body.phone, },
+                ]
+            }
+        }).then(async (queryResult) => {
+            // var dva = await createAndAssignDVA(queryResult.email, queryResult.first_name, queryResult.last_name, queryResult.phone);
+            // console.log(dva);
+            if (queryResult) {
+                const email = body.email;
+                // Create token
+                const jwtoken = jwt.sign(
+                    { user_id: email, email },
+                    process.env.TOKEN_KEY,
+                    { expiresIn: "3600s" }
+                );
+                User.update({
+                    token: jwtoken
+                }, {
+                    where: {
+                        [Op.or]: [
+                            { email: body.email, },
+                            // { phone: body.phone, },
+                        ]
+                    }
+                }).then(async (update) => {
+                    if (update) {
+                        let { id, email, phone, image_URL, first_name, last_name, uid } = queryResult;
+                        res.status(200).send({
+                            status: true,
+                            payload: {
+                                token: jwtoken,
+                                user: { id, email, phone, image_URL, first_name, last_name, uid },
+                            }
+                        })
+                    } else {
+                        res.send({
+                            status: false,
+                            payload: "Something went wrong. Please try again."
+                        })
+                    }
+                })
+            } else {
+                res.send({
+                    status: false,
+                    payload: "User must login, at least once, with email and password before they can use biometric login features."
+                })
+            }
+        });
+    } catch (error) {
+        res.send({
+            status: false,
+            payload: "Something went wrong. Please try again."
         })
     }
 }
@@ -667,4 +728,4 @@ const deleteAccount = (req, res) => {
     }
 }
 
-module.exports = { allUsers, signup, login, resendOtp, verifyOTP, resetPassword, addAddress, getUser, notification, updateProfile, deleteAccount, addImageURL, topup, getBalance };
+module.exports = { allUsers, signup, login, resendOtp, verifyOTP, resetPassword, addAddress, getUser, notification, updateProfile, deleteAccount, addImageURL, topup, getBalance, bioMetricLogin };
