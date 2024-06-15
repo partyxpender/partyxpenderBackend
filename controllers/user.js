@@ -205,12 +205,12 @@ const login = (req, res) => {
                                 }
                             }).then(async (update) => {
                                 if (update) {
-                                    let { id, email, phone, image_URL, first_name, last_name, address } = queryResult;
+                                    let { id, email, phone, image_URL, first_name, last_name, uid } = queryResult;
                                     res.status(200).send({
                                         status: true,
                                         payload: {
                                             token: jwtoken,
-                                            user: { id, email, phone, image_URL, first_name, last_name, address },
+                                            user: { id, email, phone, image_URL, first_name, last_name, uid },
                                         }
                                     })
                                 } else {
@@ -253,7 +253,7 @@ const resendOtp = async (req, res) => {
         let body = req.body;
         let date = new Date().getTime();
         console.log(date);
-        if (body.email.trim() != "" || body.phone.trim() != "") {
+        if (body.email.trim() != "") {
             var userotp = { otp: generateOtp(), timestamp: date }
 
             User.update({
@@ -262,7 +262,6 @@ const resendOtp = async (req, res) => {
                 where: {
                     [Op.or]: [
                         { email: body.email },
-                        { phone: body.phone }
                     ]
                 }
             }).then(async (update) => {
@@ -628,6 +627,24 @@ const topup = (req, res) => {
     }
 }
 
+const getBalance = (req, res) => {
+    try {
+        User.findOne({
+            where: {
+                uid: req.body.uid,
+            }
+        }).then((user) => {
+            if (user) {
+                res.send({ status: true, payload: user.wallet })
+            } else {
+                res.send({ status: false, payload: "User not found." })
+            }
+        })
+    } catch (error) {
+        res.send({ status: false, payload: "Something went wrong. Please try again." });
+    }
+}
+
 const deleteAccount = (req, res) => {
     try {
         User.findOne({
@@ -650,4 +667,4 @@ const deleteAccount = (req, res) => {
     }
 }
 
-module.exports = { allUsers, signup, login, resendOtp, verifyOTP, resetPassword, addAddress, getUser, notification, updateProfile, deleteAccount, addImageURL, topup };
+module.exports = { allUsers, signup, login, resendOtp, verifyOTP, resetPassword, addAddress, getUser, notification, updateProfile, deleteAccount, addImageURL, topup, getBalance };

@@ -7,7 +7,7 @@ router.post('/user/login', user.login);
 router.post('/user/otp', user.resendOtp);
 router.post('/user/verify_otp', user.verifyOTP);
 router.post('/user/reset_password', user.resetPassword);
-// router.post('/user/add_address', user.addAddress);
+router.post('/user/balance', user.getBalance);
 router.post('/user', user.getUser);
 // router.post('/user/notification', user.notification);
 router.patch('/user', user.updateProfile);
