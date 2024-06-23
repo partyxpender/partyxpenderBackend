@@ -27,7 +27,7 @@ const User = dbConfig.define('users', {
     },
     "username": {
         type: DataTypes.STRING,
-        allowNull: false,unique: true,
+        allowNull: false, unique: true,
         defaultValue: ""
     },
     "leader_board": {
@@ -56,7 +56,10 @@ const User = dbConfig.define('users', {
         type: DataTypes.INTEGER,
         allowNull: false, defaultValue: 0
     },
-    
+    "total_received": {
+        type: DataTypes.INTEGER,
+        allowNull: false, defaultValue: 0
+    },
     "is_active": {
         type: DataTypes.BOOLEAN,
         allowNull: false,

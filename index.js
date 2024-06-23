@@ -8,6 +8,7 @@ const userRoute = require('./routes/user.route');
 const { Server } = require("socket.io");
 
 const { createServer } = require("node:http");
+const { xpend } = require("./controllers/user");
 const server = createServer(app);
 const io = new Server(server);
 //db authentication
@@ -49,6 +50,10 @@ io.on("connection", (socket) => {
     // console.log(socket.handshake.url);
     console.log("someone connected");
     socket.on('xpending', (info) => {
+        console.log(info);
+        xpend(info.xpender, info.receiver, info.amount);
+    });
+    socket.on('add_user', (info) => {
         console.log(info);
     });
 })

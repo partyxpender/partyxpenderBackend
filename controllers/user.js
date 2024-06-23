@@ -731,4 +731,39 @@ const deleteAccount = (req, res) => {
     }
 }
 
-module.exports = { allUsers, signup, login, resendOtp, verifyOTP, resetPassword, addAddress, getUser, notification, updateProfile, deleteAccount, addImageURL, topup, getBalance, bioMetricLogin };
+const xpend = (xuid, ruid, amount) => {
+    try {
+        User.findOne({
+            where: {
+                uid: xuid,
+            }
+        }).then(async (xpender) => {
+            if (xpender) {
+                //! deduct amount from xpender
+                await User.update({
+                    wallet: xpender.wallet - amount,
+                    total_xpent: xpender.total_xpent + amount,
+                }, {
+                    where: {
+                        uid: xuid
+                    }
+                });
+                //* add amount to receiver
+                await User.update({
+                    wallet: xpender.wallet + amount,
+                    total_received: xpender.total_received + amount,
+                }, {
+                    where: {
+                        uid: ruid
+                    }
+                });
+                /// notification
+                //    await Notification.bulkCreate()
+            }
+        })
+    } catch (error) {
+
+    }
+}
+
+module.exports = { allUsers, signup, login, resendOtp, verifyOTP, resetPassword, addAddress, getUser, notification, updateProfile, deleteAccount, addImageURL, topup, getBalance, bioMetricLogin, xpend };
