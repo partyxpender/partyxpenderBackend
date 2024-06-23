@@ -5,6 +5,11 @@ const { dbConfig } = require('./db/db');
 const bodyParser = require('body-parser');
 const port = process.env.MYSQL_ADDON_PORT;
 const userRoute = require('./routes/user.route');
+const { Server } = require("socket.io");
+
+const { createServer } = require("node:http");
+const server = createServer(app);
+const io = new Server(server);
 //db authentication
 dbConfig.authenticate().then((_) => {
     console.log("DB authentication successful");
@@ -37,6 +42,17 @@ app.use((req, res, next) => {
 app.get('/', (req, res) => res.send("Hello, world!\n\nWelcome to partie - xpender"));
 app.use("/api/v0/users", userRoute);
 
-app.listen(port, () => {
+
+
+
+io.on("connection", (socket) => {
+    // console.log(socket.handshake.url);
+    console.log("someone connected");
+    socket.on('msg', (msg) => {
+        console.log(msg);
+    })
+})
+
+server.listen(port, () => {
     console.log(`PartieXpender is listening on ${port}`);
 });
