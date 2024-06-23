@@ -531,13 +531,18 @@ const getUser = (req, res) => {
         }).then((user) => {
             if (user) {
                 let token = body.token || req.headers.authorization;
-                let isTokenValid = jwt.verify(token.split(" ")[1], process.env.TOKEN_KEY);
-                if (isTokenValid && token.split(" ")[1] == user.token) {
-                    let { id, first_name, last_name, email, phone, img_URL, wallet, uid, username, leader_board, account_number, image_URL } = user;
-                    res.send({ status: true, payload: { id, first_name, last_name, email, phone, img_URL, wallet, uid, username, leader_board, account_number, image_URL } })
-                } else {
-                    res.send({ status: false, payload: "This session has expired. Login again." });
-                }
+                // let isTokenValid = true;
+                jwt.verify(token.split(" ")[1], process.env.TOKEN_KEY, (err, decoded) => {
+                    if (err) {
+                        res.send({ status: false, payload: "This session has expired. Login again." });
+                    } else if (token.split(" ")[1] == user.token) {
+
+                        let { id, first_name, last_name, email, phone, img_URL, wallet, uid, username, leader_board, account_number, image_URL } = user;
+                        res.send({ status: true, payload: { id, first_name, last_name, email, phone, img_URL, wallet, uid, username, leader_board, account_number, image_URL } })
+                    } else {
+                        res.send({ status: false, payload: "This session has expired. Login again." });
+                    }
+                });
 
             } else {
                 res.send({ status: false, payload: "User not found." });
@@ -743,7 +748,7 @@ const xpend = (xuid, ruid, amount) => {
                 //! deduct amount from xpender
                 await User.update({
                     wallet: xpender.wallet - amount,
-                    total_xpent: xpender.total_xpent - amount,
+                    total_xpent: xpender.total_xpent + amount,
                 }, {
                     where: {
                         uid: xuid
