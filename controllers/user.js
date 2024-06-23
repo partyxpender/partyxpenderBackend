@@ -743,7 +743,7 @@ const xpend = (xuid, ruid, amount) => {
                 //! deduct amount from xpender
                 await User.update({
                     wallet: xpender.wallet - amount,
-                    total_xpent: xpender.total_xpent + amount,
+                    total_xpent: xpender.total_xpent - amount,
                 }, {
                     where: {
                         uid: xuid
