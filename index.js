@@ -48,8 +48,8 @@ app.use("/api/v0/users", userRoute);
 io.on("connection", (socket) => {
     // console.log(socket.handshake.url);
     console.log("someone connected");
-    socket.on('msg', (msg) => {
-        console.log(msg);
+    socket.on('xpending', (info) => {
+        console.log(info);
     });
 })
 
