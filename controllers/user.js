@@ -250,6 +250,7 @@ const login = (req, res) => {
 
 const bioMetricLogin = (req, res) => {
     try {
+        let body = req.body;
         User.findOne({
             where: {
                 [Op.or]: [
