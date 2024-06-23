@@ -50,7 +50,7 @@ io.on("connection", (socket) => {
     console.log("someone connected");
     socket.on('msg', (msg) => {
         console.log(msg);
-    })
+    });
 })
 
 server.listen(port, () => {

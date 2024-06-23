@@ -288,6 +288,7 @@ const bioMetricLogin = (req, res) => {
                             }
                         })
                     } else {
+                        console.log(update);
                         res.send({
                             status: false,
                             payload: "Something went wrong. Please try again."
@@ -302,6 +303,7 @@ const bioMetricLogin = (req, res) => {
             }
         });
     } catch (error) {
+        console.log(error);
         res.send({
             status: false,
             payload: "Something went wrong. Please try again."
