@@ -739,6 +739,7 @@ const xpend = (xuid, ruid, amount) => {
             }
         }).then(async (xpender) => {
             if (xpender) {
+                console.log("seen xpender");
                 //! deduct amount from xpender
                 await User.update({
                     wallet: xpender.wallet - amount,
@@ -748,19 +749,32 @@ const xpend = (xuid, ruid, amount) => {
                         uid: xuid
                     }
                 });
+
+                /// notification
+                //    await Notification.bulkCreate()
+            }
+        });
+        User.findOne({
+            where: {
+                uid: ruid,
+            }
+        }).then(async (receiver) => {
+            if (receiver) {
+                console.log("seen receiver");
                 //* add amount to receiver
                 await User.update({
-                    wallet: xpender.wallet + amount,
-                    total_received: xpender.total_received + amount,
+                    wallet: receiver.wallet + amount,
+                    total_received: receiver.total_received + amount,
                 }, {
                     where: {
                         uid: ruid
                     }
                 });
+
                 /// notification
                 //    await Notification.bulkCreate()
             }
-        })
+        });
     } catch (error) {
 
     }
