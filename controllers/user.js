@@ -795,6 +795,7 @@ const addUser = (xuid, ruid) => {
         }).then(async (xpender) => {
             if (xpender) {
                 let pp = JSON.parse(xpender.list);
+                console.log(pp);
                 User.findOne({
                     where: { uid: ruid }
                 }).then(async (user) => {
