@@ -44,6 +44,11 @@ const User = dbConfig.define('users', {
         allowNull: false,
         defaultValue: ""
     },
+    "list": {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: ""
+    },
     "otp": {
         type: DataTypes.STRING,
         allowNull: true,

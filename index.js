@@ -8,7 +8,7 @@ const userRoute = require('./routes/user.route');
 const { Server } = require("socket.io");
 
 const { createServer } = require("node:http");
-const { xpend } = require("./controllers/user");
+const { xpend, addUser } = require("./controllers/user");
 const server = createServer(app);
 const io = new Server(server);
 //db authentication
@@ -55,6 +55,7 @@ io.on("connection", (socket) => {
     });
     socket.on('add_user', (info) => {
         console.log(info);
+        addUser(info.xuid, info.ruid);
     });
 })
 

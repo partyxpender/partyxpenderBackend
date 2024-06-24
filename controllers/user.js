@@ -94,6 +94,7 @@ const signup = async (req, res) => {
                                         otp: JSON.stringify(userotp),
                                         wallet: 0,
                                         total_xpent: 0,
+                                        list: JSON.stringify([]),
                                         // referral_code: generateReferralCode(body.first_name, body.phone),
                                         account_number: body.phone,
                                         // account_number: dva.payload.account_number,
@@ -785,4 +786,33 @@ const xpend = (xuid, ruid, amount) => {
     }
 }
 
-module.exports = { allUsers, signup, login, resendOtp, verifyOTP, resetPassword, addAddress, getUser, notification, updateProfile, deleteAccount, addImageURL, topup, getBalance, bioMetricLogin, xpend };
+const addUser = (xuid, ruid) => {
+    try {
+        User.findOne({
+            where: {
+                uid: xuid,
+            }
+        }).then(async (xpender) => {
+            if (xpender) {
+                let pp = JSON.parse(xpender.list);
+                User.findOne({
+                    where: { uid: ruid }
+                }).then(async (user) => {
+                    if (user) {
+                        let { uid, username, image_URL } = user;
+                        await User.update({
+                            list: JSON.stringify(pp.push({ uid, username, image_URL }))
+                        }, { where: { uid: xuid } });
+                    } else {
+
+                    }
+                })
+            } else {
+
+            }
+        })
+    } catch (error) {
+
+    }
+}
+module.exports = { allUsers, signup, login, resendOtp, verifyOTP, resetPassword, addAddress, getUser, notification, updateProfile, deleteAccount, addImageURL, topup, getBalance, bioMetricLogin, xpend, addUser };
