@@ -52,6 +52,7 @@ io.on("connection", (socket) => {
     socket.on('xpending', (info) => {
         console.log(info);
         xpend(info.xpender, info.receiver, info.amount);
+        socket.emit(info.receiver, { receiver: info.receiver, amount: info.amount, xpender: info.xpender });
     });
     socket.on('add_user', (info) => {
         console.log(info);
