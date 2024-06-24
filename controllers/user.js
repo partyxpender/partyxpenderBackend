@@ -794,15 +794,15 @@ const addUser = (xuid, ruid) => {
             }
         }).then(async (xpender) => {
             if (xpender) {
-                // let pp = JSON.parse(xpender.list);
+                let pp = JSON.parse(xpender.list);
                 User.findOne({
                     where: { uid: ruid }
                 }).then(async (user) => {
                     if (user) {
                         let { uid, username, image_URL } = user;
                         await User.update({
-                            list: JSON.stringify([{ uid, username, image_URL }])
-                            // list: JSON.stringify(pp.push({ uid, username, image_URL }))
+                            // list: JSON.stringify([{ uid, username, image_URL }])
+                            list: JSON.stringify(pp.push({ uid, username, image_URL }))
                         }, { where: { uid: xuid } });
                     } else {
 
