@@ -801,9 +801,10 @@ const addUser = (xuid, ruid) => {
                 }).then(async (user) => {
                     if (user) {
                         let { uid, username, image_URL } = user;
+                        pp.push({ uid, username, image_URL });
                         await User.update({
                             // list: JSON.stringify([{ uid, username, image_URL }])
-                            list: JSON.stringify(pp.push({ uid, username, image_URL }))
+                            list: JSON.stringify(pp)
                         }, { where: { uid: xuid } });
                     } else {
 
