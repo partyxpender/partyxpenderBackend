@@ -12,7 +12,8 @@ const { xpend, addUser } = require("./controllers/user");
 const server = createServer(app);
 const io = new Server(server);
 //db authentication
-dbConfig.authenticate().then((_) => {
+dbConfig.authenticate().then(async (_) => {
+    await dbConfig.sync();
     console.log("DB authentication successful");
 }).catch((err) => {
     console.log(err);

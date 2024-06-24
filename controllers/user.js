@@ -9,6 +9,7 @@ const { Notification } = require('../models/notification.model');
 const { createDVAcustomer, createAndAssignDVA } = require('../helpers/paystack');
 const cloudinary = require('cloudinary');
 const formidable = require('formidable');
+const { Transaction } = require('../models/transaction.model');
 // const { default: Sendchamp } = require('sendchamp-sdk');
 // const { sdk } = require("sendchamp");
 
@@ -758,6 +759,14 @@ const xpend = (xuid, ruid, amount) => {
 
                 /// notification
                 //    await Notification.bulkCreate()
+                await Transaction.create({
+                    email: xpender.email,
+                    uid: xpender.uid,
+                    title: "You sprayed",
+                    subtitle: "You just sprayed",
+                    amount: amount,
+                    timestamp: Date.now(),
+                });
             }
         });
         User.findOne({
@@ -779,6 +788,14 @@ const xpend = (xuid, ruid, amount) => {
 
                 /// notification
                 //    await Notification.bulkCreate()
+                await Transaction.create({
+                    email: receiver.email,
+                    uid: receiver.uid,
+                    title: "You just got sprayed",
+                    subtitle: "just sprayed you",
+                    amount: amount,
+                    timestamp: Date.now(),
+                });
             }
         });
     } catch (error) {
