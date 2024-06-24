@@ -818,4 +818,23 @@ const addUser = (xuid, ruid) => {
 
     }
 }
-module.exports = { allUsers, signup, login, resendOtp, verifyOTP, resetPassword, addAddress, getUser, notification, updateProfile, deleteAccount, addImageURL, topup, getBalance, bioMetricLogin, xpend, addUser };
+
+const getList = (req, res) => {
+    try {
+        User.findOne({
+            id: req.body.id,
+        }).then((user) => {
+            if (user) {
+                let list = JSON.parse(user.list);
+                res.send({ "status": true, "payload": list });
+            } else {
+
+                res.send({ status: false, payload: "User not found" });
+            }
+        })
+    } catch (error) {
+        res.send({ status: false, payload: "Something went wrong. Please try again." });
+    }
+}
+
+module.exports = { allUsers, signup, login, resendOtp, verifyOTP, resetPassword, addAddress, getUser, notification, updateProfile, deleteAccount, addImageURL, topup, getBalance, bioMetricLogin, xpend, addUser, getList };
