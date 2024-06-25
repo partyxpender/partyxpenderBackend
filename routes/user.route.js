@@ -16,6 +16,7 @@ router.delete('/user', user.deleteAccount);
 router.post('/user/profile_picture', user.addImageURL);
 router.post('/user/topup', user.topup);
 router.post('/user/list', user.getList);
+router.post('/user/transaction', user.fetchTransactions);
 
 
 module.exports = router;

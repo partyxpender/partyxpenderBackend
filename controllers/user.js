@@ -853,5 +853,20 @@ const getList = (req, res) => {
         res.send({ status: false, payload: "Something went wrong. Please try again." });
     }
 }
+const fetchTransactions = (req, res) => {
+    try {
+        Transaction.findAll({
+            uid: req.body.uid,
+        }).then((transaction) => {
+            if (transaction) {
+                res.send({ "status": true, "payload": transaction });
+            } else {
+                res.send({ status: false, payload: "User not found." });
+            }
+        })
+    } catch (error) {
+        res.send({ status: false, payload: "Something went wrong. Please try again." });
+    }
+}
 
-module.exports = { allUsers, signup, login, resendOtp, verifyOTP, resetPassword, addAddress, getUser, notification, updateProfile, deleteAccount, addImageURL, topup, getBalance, bioMetricLogin, xpend, addUser, getList };
+module.exports = { allUsers, signup, login, resendOtp, verifyOTP, resetPassword, addAddress, getUser, notification, updateProfile, deleteAccount, addImageURL, topup, getBalance, bioMetricLogin, xpend, addUser, getList, fetchTransactions };
