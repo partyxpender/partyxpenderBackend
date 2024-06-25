@@ -21,10 +21,10 @@ const Transaction = dbConfig.define('transactions', {
         allowNull: false,
         defaultValue: ""
     },
-    // "xpender": {
-    //     type: DataTypes.STRING,
-    //     allowNull: true,
-    // },
+    "type": {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
     "amount":{
         type: DataTypes.DOUBLE,
         allowNull: false,
