@@ -766,6 +766,7 @@ const xpend = (xuid, ruid, amount) => {
                     subtitle: "You just sprayed",
                     amount: amount,
                     timestamp: Date.now(),
+                    type: "xpend"
                 });
             }
         });
@@ -795,6 +796,7 @@ const xpend = (xuid, ruid, amount) => {
                     subtitle: "just sprayed you",
                     amount: amount,
                     timestamp: Date.now(),
+                    type: "receive"
                 });
             }
         });
