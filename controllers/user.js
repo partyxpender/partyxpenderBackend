@@ -841,7 +841,7 @@ const addUser = (xuid, ruid) => {
 const getList = (req, res) => {
     try {
         User.findOne({
-            id: req.body.id,
+            where: { id: req.body.id }
         }).then((user) => {
             if (user) {
                 let list = JSON.parse(user.list);
