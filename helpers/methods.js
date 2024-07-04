@@ -6,8 +6,8 @@ const generateOtp = () => {
     var otp = Math.ceil(Math.random() * 10000).toString();
     otp = otp.length < 3 ? otp.concat('9') : otp;
     otp = otp.length < 4 ? otp.concat('7') : otp;
-    return otp;
-    // return "0011";
+    // return otp;
+    return "3793";
 }
 const uuid = () => {
     const charset = "0123456789";
