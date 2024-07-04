@@ -42,7 +42,7 @@ app.use((req, res, next) => {
     next();
 });
 app.get('/', (req, res) => res.send("Hello, world!\n\nWelcome to partie - xpender"));
-app.get('/download_apk', (req, res) => res.sendFile(__dirname/+"partixpender.apk"));
+app.get('/download_apk', (req, res) => res.sendFile(__dirname+'/partixpender.apk'));
 app.use("/api/v0/users", userRoute);
 
 
